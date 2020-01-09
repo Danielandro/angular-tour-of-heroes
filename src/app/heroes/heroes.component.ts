@@ -11,10 +11,14 @@ export class HeroesComponent implements OnInit {
   selectedHero: Hero;
   heroes: Hero[];
 
+  // inject service into constructor
   constructor(private heroService: HeroService) {}
 
   ngOnInit() {
-    this.heroes = this.heroService.getHeroes();
+    // subscribe to returned observable to access heroes
+    this.heroService.getHeroes().subscribe(heroes => {
+      this.heroes = heroes;
+    });
   }
 
   // set selected hero
