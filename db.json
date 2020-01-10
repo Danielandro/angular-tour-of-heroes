@@ -1,14 +1,6 @@
 {
   "heroes": [
     {
-      "id": 11,
-      "name": "Dr Madman"
-    },
-    {
-      "id": 12,
-      "name": "Narco"
-    },
-    {
       "id": 13,
       "name": "Bombasto"
     },
@@ -21,16 +13,12 @@
       "name": "Magneta"
     },
     {
-      "id": 16,
-      "name": "RubberMan"
-    },
-    {
       "id": 17,
       "name": "Dynama"
     },
     {
       "id": 18,
-      "name": "Dr IQ"
+      "name": "Dr IQL"
     },
     {
       "id": 19,
