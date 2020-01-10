@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Hero } from "../models/hero";
 import { Observable, of } from "rxjs";
-import { catchError, map, tap } from "rxjs/operators";
+import { catchError, map, tap, filter } from "rxjs/operators";
 import { MessageService } from "./message.service";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 
@@ -16,7 +16,7 @@ export class HeroService {
     private http: HttpClient
   ) {}
 
-  private heroesUrl = "https://jsonplaceholder.typicode.com/users"; // url to web api
+  private heroesUrl = "http://localhost:3000/heroes"; // url to web api
 
   // return mock heroes
   getHeroes(): Observable<Hero[]> {
@@ -25,11 +25,18 @@ export class HeroService {
       .pipe(catchError(this.handleError<Hero[]>("getHeroes", []))); // return empty error if observable fails
   }
 
-  getHero(id: number) {
+  getArray() {
+    return of(1, 2, 3, 4, 5, 6, 7).pipe(
+      filter(num => num % 2 === 0),
+      map(num => `this is a even num: ${num}`)
+    );
+  }
+  getHero(id: number): Observable<Hero> {
     this.log(`Fetched hero id=${id}`);
-    // return of(HEROES.find(hero => hero.id === id));
-    // return this.getHeroes().map(heroes => heroes.find(hero => hero.id === id));
-    return this.getHeroes().pipe(tap(arr => console.log("Tap: ", arr)));
+    return this.getHeroes().pipe(
+      tap(arr => console.log("b4 Tap: ", arr)),
+      map(heroes => heroes.find(hero => hero.id === id))
+    );
   }
 
   private log(message: string): void {

@@ -23,10 +23,10 @@ import { DashboardComponent } from "./components/dashboard/dashboard.component";
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
-      dataEncapsulation: false
-    })
+    HttpClientModule
+    // HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
+    //   dataEncapsulation: false
+    // })
   ],
   providers: [],
   bootstrap: [AppComponent]
