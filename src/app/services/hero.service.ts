@@ -20,9 +20,10 @@ export class HeroService {
 
   // return mock heroes
   getHeroes(): Observable<Hero[]> {
-    return this.http
-      .get<Hero[]>(this.heroesUrl)
-      .pipe(catchError(this.handleError<Hero[]>("getHeroes", []))); // return empty error if observable fails
+    return this.http.get<Hero[]>(this.heroesUrl).pipe(
+      tap(_ => this.log("fetched heroes")),
+      catchError(this.handleError<Hero[]>("getHeroes", []))
+    ); // return empty error if observable fails
   }
 
   getArray() {
@@ -32,9 +33,8 @@ export class HeroService {
     );
   }
   getHero(id: number): Observable<Hero> {
-    this.log(`Fetched hero id=${id}`);
     return this.getHeroes().pipe(
-      tap(arr => console.log("b4 Tap: ", arr)),
+      tap(_ => this.log(`Fetched hero id=${id}`)),
       map(heroes => heroes.find(hero => hero.id === id))
     );
   }

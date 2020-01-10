@@ -21,7 +21,7 @@ export class HeroDetailComponent implements OnInit {
     this.getHero();
     this.heroService.getArray().subscribe(n => console.log(n));
   }
-  s;
+
   getHero(): void {
     // snapshot -> static image of route info
     // paramMap -> dictionary of param values extracted
