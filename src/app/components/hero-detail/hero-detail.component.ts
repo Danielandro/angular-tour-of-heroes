@@ -27,14 +27,17 @@ export class HeroDetailComponent implements OnInit {
     // paramMap -> dictionary of param values extracted
     // + -> converts string to number
     const id = +this.route.snapshot.paramMap.get("id");
-    // console.log(id);
     this.heroService.getHero(id).subscribe(hero => {
-      // this.hero = hero;
+      this.hero = hero;
       console.log("Hero Details", hero);
     });
   }
 
   goBack(): void {
     this.location.back();
+  }
+
+  save(hero: Hero): void {
+    this.heroService.updateHero(hero).subscribe(() => this.goBack());
   }
 }

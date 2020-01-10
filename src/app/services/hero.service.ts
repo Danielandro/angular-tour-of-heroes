@@ -35,8 +35,15 @@ export class HeroService {
   getHero(id: number): Observable<Hero> {
     return this.getHeroes().pipe(
       tap(_ => this.log(`Fetched hero id=${id}`)),
-      map(heroes => heroes.find(hero => hero.id === id))
+      map(heroes => heroes.find(hero => hero.id === id)),
+      catchError(this.handleError<Hero>("getHero"))
     );
+  }
+
+  updateHero(hero: Hero): Observable<any> {
+    return this.http
+      .patch(`${this.heroesUrl}/${hero.id}`, hero)
+      .pipe(tap(res => console.log("RESPONSE:", res)));
   }
 
   private log(message: string): void {
