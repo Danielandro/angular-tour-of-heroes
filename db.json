@@ -18,7 +18,7 @@
     },
     {
       "id": 18,
-      "name": "Dr IQL"
+      "name": "Dr IQ"
     },
     {
       "id": 19,
@@ -27,6 +27,18 @@
     {
       "id": 20,
       "name": "Tornado"
+    },
+    {
+      "name": "Angelino",
+      "id": 21
+    },
+    {
+      "name": "Cabrera",
+      "id": 22
+    },
+    {
+      "name": "Isoceles",
+      "id": 23
     }
   ]
 }

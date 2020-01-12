@@ -17,6 +17,9 @@ export class HeroService {
   ) {}
 
   private heroesUrl = "http://localhost:3000/heroes"; // url to web api
+  private httpOptions = {
+    headers: new HttpHeaders({ "Content-Type": "application/json" })
+  };
 
   getHeroes(): Observable<Hero[]> {
     return this.http.get<Hero[]>(this.heroesUrl).pipe(
@@ -33,11 +36,31 @@ export class HeroService {
     );
   }
 
+  addHero(hero: Hero): Observable<any> {
+    // get the heroes
+    this.getHeroes().subscribe(heroes => {
+      // generate and set id
+      let id = this.genId(heroes);
+      hero.id = id;
+    });
+    // send post request to server
+    return this.http
+      .post(this.heroesUrl, hero)
+      .pipe(
+        tap(
+          _ => this.log(`added hero id=${hero.id}`),
+          catchError(this.handleError<Hero>("addHero"))
+        )
+      );
+  }
+
   updateHero(hero: Hero): Observable<any> {
-    return this.http.patch(`${this.heroesUrl}/${hero.id}`, hero).pipe(
-      tap(_ => this.log(`updated hero id=${hero.id}`)),
-      catchError(this.handleError<Hero>("updateHero"))
-    );
+    return this.http
+      .patch(`${this.heroesUrl}/${hero.id}`, hero, this.httpOptions)
+      .pipe(
+        tap(_ => this.log(`updated hero id=${hero.id}`)),
+        catchError(this.handleError<Hero>("updateHero"))
+      );
   }
 
   deleteHero(hero: Hero): Observable<any> {
@@ -59,6 +82,11 @@ export class HeroService {
     };
   }
 
+  private genId(heroes: Hero[]): number {
+    return heroes.length > 0
+      ? Math.max(...heroes.map(hero => hero.id)) + 1
+      : 11;
+  }
   // getArray() {
   //   return of(1, 2, 3, 4, 5, 6, 7).pipe(
   //     filter(num => num % 2 === 0),

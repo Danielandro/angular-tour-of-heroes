@@ -19,7 +19,6 @@ export class HeroDetailComponent implements OnInit {
 
   ngOnInit() {
     this.getHero();
-    this.heroService.getArray().subscribe(n => console.log(n));
   }
 
   getHero(): void {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Hero } from "../../models/hero";
 import { HeroService } from "../../services/hero.service";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-heroes",
@@ -11,7 +12,10 @@ export class HeroesComponent implements OnInit {
   heroes: Hero[];
 
   // inject service into constructor
-  constructor(private heroService: HeroService) {}
+  constructor(
+    private heroService: HeroService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     // get heroes from service
@@ -21,7 +25,17 @@ export class HeroesComponent implements OnInit {
   getHeroes(): void {
     this.heroService.getHeroes().subscribe(heroes => {
       this.heroes = heroes;
-      console.log("HEROES:", heroes);
+    });
+  }
+
+  // create hero if name is not empty
+  add(name: string): void {
+    name = name.trim();
+    if (!name) {
+      return;
+    } // if no name provided
+    this.heroService.addHero({ name } as Hero).subscribe(() => {
+      console.log("Adding a new Hero...");
     });
   }
 }
